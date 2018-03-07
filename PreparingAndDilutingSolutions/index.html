@@ -4,6 +4,7 @@
 	<title>Preparing and Diluting Solutions</title>
 	<link rel="shortcut icon" href="..\flags_ora_icon.ico">
 	<link href="https://fonts.googleapis.com/css?family=Quattrocento|Quattrocento+Sans" rel="stylesheet">
+	<!-- import LaTeX -->
 	<style type="text/css">
 		body, input {
 			background-color: #FFFDD0;
@@ -16,6 +17,7 @@
 			border: 2px solid blue;
 			text-align: center;
 			width: 100%;
+			margin-top: 20px;
 		}
 		table td {
 			padding: 5px;
@@ -50,6 +52,9 @@
 		}
 		#summative td {
 			width: 25%;
+		}
+		#masses td {
+			width: 50%;
 		}
 	</style>
 </head>
@@ -121,12 +126,28 @@
 			</tr>
 		</tbody>
 	</table>
+	<table id="masses">
+		<thead class="header">
+			<tr>
+				<td>Mass of \(CuSO_{4}\cdotp5H_{2}O\) (g)</td>
+				<td>Volume of \(CuSO_{4}\cdotp5H_{2}O_{(aq)}\) Solution (mL)</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr id="Masses">
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+			</tr>
+		</tbody>
+	</table>
 <button id="submit" onclick="submit()">Calculate Data</button>
 <div id="answer"> </div>
 <script type="text/javascript">
 	var ansDiv = document.getElementById("answer");
+	var stockMol = 0;
 	var submit = function() {
-		ansDiv.innerHTML = "";		
+		ansDiv.innerHTML = "";
+		initMolarity();	
 		var ViStockEl = document.querySelectorAll("#ViStock input");
 		console.log(ViStockEl);
 		var VfStockEl = document.querySelectorAll("#VfStock input");
@@ -143,18 +164,18 @@
 			VfStock = parseFloat(VfStockEl[i].value || 0, 10);
 			ViStock = parseFloat(ViStockEl[i].value || 0, 10);
 			VStock[i] = +(VfStock - ViStock).toFixed(5);
-			ansDiv.innerHTML += "Volume of Stock = Vf Stock - Vi Stock <br>= " + VfStock + " mL - " + ViStock + " mL<br>= " + VStock[i].toFixed(5) + " mL<br><br>";
+			ansDiv.innerHTML += "Volume of Stock = Vf Stock - Vi Stock <br>= " + VfStock.toFixed(2) + " mL - " + ViStock.toFixed(2) + " mL<br>= " + VStock[i].toFixed(2) + " mL<br><br>";
 
 			VfWater = parseFloat(VfWaterEl[i].value || 0, 10);
 			ViWater = parseFloat(ViWaterEl[i].value || 0, 10);
 			VWater[i] = +(VfWater - ViWater).toFixed(5);
-			ansDiv.innerHTML += "Volume of Water = Vf Water - Vi Water <br>= " + VfWater + " mL - " + ViWater + " mL<br>= " + VWater[i].toFixed(5) + " mL<br><br>";
+			ansDiv.innerHTML += "Volume of Water = Vf Water - Vi Water <br>= " + VfWater.toFixed(2) + " mL - " + ViWater.toFixed(2) + " mL<br>= " + VWater[i].toFixed(2) + " mL<br><br>";
 
-			TotVolume = +(VWater[i] + VStock[i]).toFixed(5);
-			ansDiv.innerHTML += "Volume of the solution = Volume of Stock + Volume of Water<br>= " + VStock[i].toFixed(5) + " mL + " + VWater[i].toFixed(5) + " mL<br>= " + TotVolume	+ " mL<br><br>";
+			TotVolume = +((VWater[i] + VStock[i]).toFixed(2));
+			ansDiv.innerHTML += "Volume of the solution = Volume of Stock + Volume of Water<br>= " + VStock[i].toFixed(2) + " mL + " + VWater[i].toFixed(2) + " mL<br>= " + TotVolume.toFixed(2) + " mL<br><br>";
 
-			Concs[i] = 0.15 * VStock[i] / TotVolume;
-			ansDiv.innerHTML += "Apply Henry's Law to obtain the concentration of the solution<br>V1 * M1 = V2 * M2, M1 = (M2 * V2)/V1 where<br>M1 and V1 are the concentration and volume of the solution and M2 and V2 are the concentration and the volume of the stock<br>M1 = (M2 * V2)/V1 = (" + 0.15 + " mol/L * " + VStock[i] + " mL)/" + TotVolume + " mL<br>= " + Concs[i].toFixed(5) + "M<br><br>";
+			Concs[i] = stockMol * VStock[i] / TotVolume;
+			ansDiv.innerHTML += "Apply Henry's Law to obtain the concentration of the solution<br>V1 * M1 = V2 * M2, M1 = (M2 * V2)/V1 where<br>M1 and V1 are the concentration and volume of the solution and M2 and V2 are the concentration and the volume of the stock<br>M1 = (M2 * V2)/V1 = (" + stockMol + " mol/L * " + VStock[i].toFixed(2) + " mL)/" + TotVolume.toFixed(2) + " mL<br>= " + Concs[i].toFixed(5) + "M<br><br>";
 		}
 
 		tblString = "<br><br><strong>Table of Concentration</strong><br><table id='summative'><thead><tr><td>Test Tube</td><td>Color</td><td>Concentration</td><td>Absorbance</td></tr></thead><tbody>";
@@ -166,6 +187,20 @@
 		tblString += "</tbody></table><br><br>DISCLAIMER: This information is not guaranteed to be completely accurate.  Please use the data cautiously.  Also if you used it before 22:30 on March 6, 2018, you will need to rerun the test as the program had an error.  I hope you enjoy using this!";
 		ansDiv.innerHTML += tblString;		
 	};
+	var initMolarity = function() {
+		ansDiv.innerHTML += "<strong>Determine Initial Molarity of the Stock</strong><br><br>";
+		var table2Els = document.querySelectorAll("tbody #Masses input");
+		var mmCu = 249.68;
+		var massCu = (table2Els[0].value || 0);
+		var volSol = (table2Els[1].value || 0);
+		var molCu = +(massCu / mmCu).toFixed(4);
+		ansDiv.innerHTML += "Moles of Stock<br>mol Copper (II) Sulfate Pentahydrate = mass (g) /molar mass (g/mol)<br>= " + massCu + "g / " + mmCu + "g/mol<br>= " + molCu + "mol<br><br>";
+		stockMol = +(molCu / volSol * 1000).toFixed(3);
+		ansDiv.innerHTML += "Molarity (Concentration) of Solution<br>M = mol Copper (II) Sulfate Pentahydrate (mol) / volume (L)<br>= " + molCu + "mol / " + volSol + "mL * L/1000mL<br>= " + stockMol + "M<br><br>";
+		console.log(stockMol);
+	};
+
 </script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
 </body>
 </html>
