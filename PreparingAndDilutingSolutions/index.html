@@ -154,7 +154,7 @@
 			ansDiv.innerHTML += "Volume of the solution = Volume of Stock + Volume of Water<br>= " + VStock[i].toFixed(5) + " mL + " + VWater[i].toFixed(5) + " mL<br>= " + TotVolume	+ " mL<br><br>";
 
 			Concs[i] = 0.30 * VStock[i] / TotVolume;
-			ansDiv.innerHTML += "Apply Henry's Law to obtain the concentration of the solution<br>V1 * M1 = V2 * M2, M1 = (M2 * V2)/V1 where<br>M1 and V1 are the concentration and volume of the solution and M2 and V2 are the concentration and the volume of the stock<br>M1 = (M2 * V2)/V1 = (" + 0.30 + " mol/L * " + VStock[i] + " L)/" + TotVolume + " mL<br>= " + Concs[i].toFixed(5) + "M<br><br>";
+			ansDiv.innerHTML += "Apply Henry's Law to obtain the concentration of the solution<br>V1 * M1 = V2 * M2, M1 = (M2 * V2)/V1 where<br>M1 and V1 are the concentration and volume of the solution and M2 and V2 are the concentration and the volume of the stock<br>M1 = (M2 * V2)/V1 = (" + 0.30 + " mol/L * " + VStock[i] + " mL)/" + TotVolume + " mL<br>= " + Concs[i].toFixed(5) + "M<br><br>";
 		}
 
 		tblString = "<br><br><strong>Table of Concentration</strong><br><table id='summative'><thead><tr><td>Test Tube</td><td>Color</td><td>Concentration</td><td>Absorbance</td></tr></thead><tbody>";
