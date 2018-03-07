@@ -149,7 +149,6 @@
 		ansDiv.innerHTML = "";
 		initMolarity();	
 		var ViStockEl = document.querySelectorAll("#ViStock input");
-		console.log(ViStockEl);
 		var VfStockEl = document.querySelectorAll("#VfStock input");
 		var VStock    = [0];
 		var ViWaterEl = document.querySelectorAll("#ViWater input");
@@ -185,7 +184,9 @@
 			tblString += "<tr><td class='leftCol'>" + (i+1) + "</td><td>" + color + "</td><td>" + Concs[i].toFixed(5) + "</td><td>" + absorbance + "</td></tr>";
 		}
 		tblString += "</tbody></table><br><br>DISCLAIMER: This information is not guaranteed to be completely accurate.  Please use the data cautiously.  Also if you used it before 22:30 on March 6, 2018, you will need to rerun the test as the program had an error.  I hope you enjoy using this!";
-		ansDiv.innerHTML += tblString;		
+		ansDiv.innerHTML += tblString;
+		console.log("What a nerd! Looking at the console...");
+		console.log("Have fun on this beautiful day!");		
 	};
 	var initMolarity = function() {
 		ansDiv.innerHTML += "<strong>Determine Initial Molarity of the Stock</strong><br><br>";
@@ -197,7 +198,6 @@
 		ansDiv.innerHTML += "Moles of Stock<br>mol Copper (II) Sulfate Pentahydrate = mass (g) /molar mass (g/mol)<br>= " + massCu + "g / " + mmCu + "g/mol<br>= " + molCu + "mol<br><br>";
 		stockMol = +(molCu / volSol * 1000).toFixed(3);
 		ansDiv.innerHTML += "Molarity (Concentration) of Solution<br>M = mol Copper (II) Sulfate Pentahydrate (mol) / volume (L)<br>= " + molCu + "mol / " + volSol + "mL * L/1000mL<br>= " + stockMol + "M<br><br>";
-		console.log(stockMol);
 	};
 
 </script>
