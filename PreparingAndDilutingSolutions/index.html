@@ -25,6 +25,9 @@
 			font-weight: bold;
 			min-width: 150px;
 		}
+		.leftCol {
+			font-weight: bold;
+		}
 		#submit {
 			background-color: lightgray;
 			color: black;
@@ -36,6 +39,9 @@
 		}
 		#submit:hover {
 			background-color: lightblue;
+		}
+		#summative td {
+			width: 25%;
 		}
 	</style>
 </head>
@@ -143,11 +149,11 @@
 			ansDiv.innerHTML += "Apply Henry's Law to obtain the concentration of the solution<br>V1 * M1 = V2 * M2, M1 = (M2 * V2)/V1 where<br>M1 and V1 are the concentration and volume of the solution and M2 and V2 are the concentration and the volume of the stock<br>M1 = (M2 * V2)/V1 = (" + 0.30 + " mol/L * " + VStock[i] + " L)/" + TotVolume + " mL<br>= " + Concs[i] + "M<br><br>";
 		}
 
-		tblString = "<br><br><strong>Table of Concentration</strong><br><table><thead><tr><td>Test Tube</td><td>Color</td><td>Concentration</td><td>Absorbance</td></tr></thead><tbody>";
+		tblString = "<br><br><strong>Table of Concentration</strong><br><table id='summative'><thead><tr><td>Test Tube</td><td>Color</td><td>Concentration</td><td>Absorbance</td></tr></thead><tbody>";
 		for(var i = 0; i < ViStockEl.length; i++) {
 			color = ColorEl[i].value || 0;
 			absorbance = AbsorbanceEl[i].value || 0;
-			tblString += "<tr><td>" + (i+1) + "</td><td>" + color + "</td><td>" + Concs[i] + "</td><td>" + absorbance + "</td></tr>";
+			tblString += "<tr><td class='leftCol'>" + (i+1) + "</td><td>" + color + "</td><td>" + Concs[i] + "</td><td>" + absorbance + "</td></tr>";
 		}
 		tblString += "</tbody></table><br><br>I hope you enjoy using this!";
 		ansDiv.innerHTML += tblString;		
