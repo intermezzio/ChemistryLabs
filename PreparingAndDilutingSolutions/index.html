@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Preparing and Diluting Solutions</title>
+	<link rel="shortcut icon" href="..\flags_ora_icon.ico">
+	<style type="text/css">
+		table {
+			border: 2px solid blue;
+			text-align: center;
+			width: 100%;
+		}
+		table td {
+			padding: 5px;
+		}
+		table thead {
+			background-color: lightgray;
+		}
+		table tbody {
+			background-color: lightblue;
+		}
+		input {
+			width: 90%;
+		}
+		.header, thead {
+			font-weight: bold;
+			min-width: 150px;
+		}
+		#submit {
+			background-color: lightgray;
+			color: black;
+			font-weight: bold;
+			font-size: 1em;
+			border: 2px solid blue;
+			margin: 25px auto;
+			padding: 10px 50px;
+		}
+		#submit:hover {
+			background-color: lightblue;
+		}
+	</style>
+</head>
+<body>
+	<h1>Preparing and Diluting Solutions Data Calcuations</h1>
+	<p>
+		This takes in the data from your lab and does all necessary calculations.  Please note that significant figures should be calculated manually as these results are as approximate as possible.<br>If you find an error or thing this site is missing something, email me at <a href="mailto:anmascillaro@ctemc.org">anmascillaro@ctemc.org</a>.  I hope this program helps!<br>-Andrew
+	</p>
+	<h2>Enter your data here</h2>
+	<table>
+		<thead>
+			<tr>
+				<td>Test Tube</td>
+				<td>1</td>
+				<td>2</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr id="ViStock">
+				<td class="header">Vi Stock (mL)</td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+			</tr>
+			<tr id="VfStock">
+				<td class="header">Vf Stock (mL)</td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+			</tr>
+			<tr id="ViWater">
+				<td class="header">Vi Water (mL)</td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+			</tr>
+			<tr id="VfWater">
+				<td class="header">Vf Water (mL)</td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+			</tr>
+			<tr id="Color">
+				<td class="header">Color</td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+			</tr>
+			<tr id="Absorbance">
+				<td class="header">Absorbance</td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+				<td><input type="number" name=""></td>
+			</tr>
+		</tbody>
+	</table>
+<button id="submit" onclick="submit()">Calculate Data</button>
+<div id="answer"> </div>
+<script type="text/javascript">
+	var ansDiv = document.getElementById("answer");
+	var submit = function() {
+		ansDiv.innerHTML = "";		
+		var ViStockEl = document.querySelectorAll("#ViStock input");
+		console.log(ViStockEl);
+		var VfStockEl = document.querySelectorAll("#VfStock input");
+		var VStock    = [0];
+		var ViWaterEl = document.querySelectorAll("#ViWater input");
+		var VfWaterEl = document.querySelectorAll("#VfWater input");
+		var VWater    = [0];
+		var Concs     = [0];
+		var ColorEl = document.querySelectorAll("#Color input");
+		var AbsorbanceEl = document.querySelectorAll("#Absorbance input");
+		for(var i = 0; i < ViStockEl.length; i++) {
+			ansDiv.innerHTML += "<strong style=\"font-size: 16px\">Analysis of Test Tube " + (i+1) + "</strong><br><br>";
+			
+			VfStock = parseFloat(VfStockEl[i].value || 0, 10);
+			ViStock = parseFloat(ViStockEl[i].value || 0, 10);
+			VStock[i] = VfStock - ViStock;
+			ansDiv.innerHTML += "Volume of Stock = Vf Stock - Vi Stock <br>= " + VfStock + " mL - " + ViStock + " mL<br>= " + VStock[i] + " mL<br><br>";
+
+			VfWater = parseFloat(VfWaterEl[i].value || 0, 10);
+			ViWater = parseFloat(ViWaterEl[i].value || 0, 10);
+			VWater[i] = VfWater - ViWater;
+			ansDiv.innerHTML += "Volume of Water = Vf Water - Vi Water <br>= " + VfWater + " mL - " + ViWater + " mL<br>= " + VWater[i] + " mL<br><br>";
+
+			TotVolume = VWater[i] + VStock[i];
+			ansDiv.innerHTML += "Volume of the solution = Volume of Stock + Volume of Water<br>= " + VStock[i] + " mL + " + VWater[i] + " mL<br>= " + TotVolume	+ " mL<br><br>";
+
+			Concs[i] = 0.30 * VStock[i] / TotVolume;
+			ansDiv.innerHTML += "Apply Henry's Law to obtain the concentration of the solution<br>V1 * M1 = V2 * M2, M1 = (M2 * V2)/V1 where<br>M1 and V1 are the concentration and volume of the solution and M2 and V2 are the concentration and the volume of the stock<br>M1 = (M2 * V2)/V1 = (" + 0.30 + " mol/L * " + VStock[i] + " L)/" + TotVolume + " mL<br>= " + Concs[i] + "M<br><br>";
+		}
+
+		tblString = "<br><br><strong>Table of Concentration</strong><br><table><thead><tr><td>Test Tube</td><td>Color</td><td>Concentration</td><td>Absorbance</td></tr></thead><tbody>";
+		for(var i = 0; i < ViStockEl.length; i++) {
+			color = ColorEl[i].value || 0;
+			absorbance = AbsorbanceEl[i].value || 0;
+			tblString += "<tr><td>" + (i+1) + "</td><td>" + color + "</td><td>" + Concs[i] + "</td><td>" + absorbance + "</td></tr>";
+		}
+		tblString += "</tbody></table><br><br>I hope you enjoy using this!";
+		ansDiv.innerHTML += tblString;		
+	};
+</script>
+</body>
+</html>
