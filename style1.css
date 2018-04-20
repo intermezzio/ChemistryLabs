@@ -1,0 +1,50 @@
+body, input {
+	background-color: #FFFDD0;
+	font-family: 'Quattrocento Sans', sans-serif;
+}
+input {
+	border: 1px solid darkgray;
+}
+table {
+	border: 2px solid blue;
+	text-align: center;
+	width: 100%;
+	margin-top: 20px;
+}
+table td {
+	padding: 5px;
+}
+table thead {
+	background-color: lightgray;
+}
+table tbody {
+	background-color: lightblue;
+}
+input {
+	width: 90%;
+}
+.header, thead {
+	font-weight: bold;
+	min-width: 150px;
+}
+.leftCol {
+	font-weight: bold;
+}
+#submit {
+	background-color: lightgray;
+	color: black;
+	font-weight: bold;
+	font-size: 1em;
+	border: 2px solid blue;
+	margin: 25px auto;
+	padding: 10px 50px;
+}
+#submit:hover {
+	background-color: lightblue;
+}
+#summative td {
+	width: 25%;
+}
+#masses td {
+	width: 50%;
+}
