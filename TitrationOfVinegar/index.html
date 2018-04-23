@@ -69,8 +69,8 @@ https://intermezzio.github.io/ChemistryLabs/PreparingAndDilutingSolutions/
 </head>
 <body>
 	<h1>Titration of Vinegar Data Calculations</h1>
-	<p>
-		This takes in the data from your lab and does all necessary calculations.  Please note that significant figures should be calculated manually as these results are as approximate as possible.<br>If you find an error or think this site is missing something, email me at <a href="mailto:amascillaro@gmail.com">amascillaro@gmail.com</a>.  I hope this program helps!<br>-Andrew
+	<p><!--
+		This takes in the data from your lab and does all necessary calculations.  Please note that significant figures should be calculated manually as these results are as approximate as possible.<br>If you find an error or think this site is missing something, email me at <a href="mailto:amascillaro@gmail.com">amascillaro@gmail.com</a>.  I hope this program helps!<br>-Andrew -->
 	</p>
 	<h2>Enter your data here</h2>
 	<table>
@@ -135,9 +135,12 @@ https://intermezzio.github.io/ChemistryLabs/PreparingAndDilutingSolutions/
 		dataset.push(Array());
 	}
 	var molz = [];
+	var vinvol = [];
+	var acmolr = [];
+	var tests = 4;
 	var submit = function() {
 		molar = parseFloat(document.getElementById("molar").value);
-		for(var i = 0; i < 4; i++) {
+		for(var i = 0; i < tests; i++) {
 			row = document.querySelector("#maintable tr:nth-of-type(" + (i+1) + ")" );
 			for(var j = 0; j < 4; j++) {
 				dataset[i][j] = parseFloat(row.querySelector("td:nth-of-type(" + (j+2) + ") input").value) || 0.;
@@ -146,6 +149,23 @@ https://intermezzio.github.io/ChemistryLabs/PreparingAndDilutingSolutions/
 		}
 		console.log(molar + "M");
 		console.log(dataset);
+
+		//-------------------------------------------------------------------------------------------------------//
+
+		for(var i = 0; i < tests; i++) {
+			molz[i] = (dataset[i][3] - dataset[i][2]) * molar / 1000;
+		}
+		console.log("Moles NaOH:\n" + molz);
+
+		for(var i = 0; i < tests; i++) {
+			vinvol[i] = (dataset[i][1] - dataset[i][0]) * molar / 1000;
+		}
+		console.log("Volume of Vinegar:\n" + vinvol);
+
+		for(var i = 0; i < tests; i++) {
+			acmolr[i] = molz[i] / vinvol[i] * 1000;
+		}
+		console.log("Molarity of C2H3O2:\n" + acmolr);
 	}
 </script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
