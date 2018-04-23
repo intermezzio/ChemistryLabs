@@ -83,7 +83,7 @@ https://intermezzio.github.io/ChemistryLabs/PreparingAndDilutingSolutions/
 				<td>Final Pipet Reading (mL)</td>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="maintable">
 			<tr class="in">
 				<td class="header">1</td>
 				<td><input type="number" name=""></td>
@@ -121,15 +121,32 @@ https://intermezzio.github.io/ChemistryLabs/PreparingAndDilutingSolutions/
 			</tr>
 		</thead>
 		<tbody>
-			<tr id="Masses">
-				<td><input type="number" name="" value="0.1401"></td>
+			<tr>
+				<td><input type="number" name="" value="0.1401" id="molar"></td>
 			</tr>
 		</tbody>
 	</table>
 <div class="center"><button id="submit" onclick="submit()">Calculate Data</button></div>
 <div id="answer"> </div>
 <script type="text/javascript">
-	
+	var dataset = [];
+	var molar = 0;
+	for(var i = 0; i < 4; i++) {
+		dataset.push(Array());
+	}
+	var molz = [];
+	var submit = function() {
+		molar = parseFloat(document.getElementById("molar").value);
+		for(var i = 0; i < 4; i++) {
+			row = document.querySelector("#maintable tr:nth-of-type(" + (i+1) + ")" );
+			for(var j = 0; j < 4; j++) {
+				dataset[i][j] = parseFloat(row.querySelector("td:nth-of-type(" + (j+2) + ") input").value) || 0.;
+			}
+			molz[i] = (dataset[i][3] - dataset[i][2])
+		}
+		console.log(molar + "M");
+		console.log(dataset);
+	}
 </script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
 </body>
