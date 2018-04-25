@@ -236,7 +236,12 @@ https://intermezzio.github.io/ChemistryLabs/PreparingAndDilutingSolutions/
 		avgperc = avgperc || "Error";
 		if(avgperc !== "Error") {
 			avgperc *= 100;
+			error = Math.abs(avgperc - 5)/5;
+			error *= 100;
+			error = error.toFixed(4) + "%";
 			avgperc = avgperc.toFixed(3) + "%";
+		} else {
+			error = "Error";
 		}
 		console.log("Percent Mass:\n" + perms);
 
@@ -264,13 +269,13 @@ https://intermezzio.github.io/ChemistryLabs/PreparingAndDilutingSolutions/
 		tbody = document.createElement("tbody");
 		for(var i = 0; i < tests; i++) {
 			datRow = document.createElement("tr");
-			datRow.innerHTML = "<td>"+(i+1)+"</td><td>"+basvol[i].toFixed(2)+"</td><td>"+vinvol[i].toFixed(2)+"</td><td>"+molz[i].toFixed(6)+"</td><td>"+acmolr[i]+"</td><td>" + perms[i] + "</td>";
+			datRow.innerHTML = "<td class='header'>"+(i+1)+"</td><td>"+basvol[i].toFixed(2)+"</td><td>"+vinvol[i].toFixed(2)+"</td><td>"+molz[i].toFixed(6)+"</td><td>"+acmolr[i]+"</td><td>" + perms[i] + "</td>";
 			tbody.appendChild(datRow);
 		}
 		summ.appendChild(tbody);
 		avgz = document.createElement("table");
 		avgz.id = "avgz";
-		avgz.innerHTML = "<tbody><tr><td>Average Molarity</td><td>" + avgmolar + "</td></tr><tr><td>Average Percent Mass</td><td>" + avgperc + "</td></tr></tbody>"; 
+		avgz.innerHTML = "<tbody><tr><td>Average Molarity (M)</td><td>" + avgmolar + "</td></tr><tr><td>Average Percent Mass (\\(\\frac{m}{m}\\))</td><td>" + avgperc + "</td></tr><tr><td>Percent Error (%)</td><td>" + error + "</td></tbody>"; 
 		answer.appendChild(summ);
 		answer.appendChild(avgz);
 		MathJax.Hub.Queue(["Typeset",MathJax.Hub,answer]);
