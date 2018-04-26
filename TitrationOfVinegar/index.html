@@ -221,7 +221,7 @@ https://intermezzio.github.io/ChemistryLabs/TitrationOfVinegar/
 		if(avgmolar !== "Error") {
 			avgmolar = avgmolar.toFixed(4);
 		}
-		console.log("Molarity of C2H3O2:\n" + acmolr);
+		console.log("Molarity of C2H4O2:\n" + acmolr);
 
 		avgperc = 0;
 		for(var i = 0; i < tests; i++) {
@@ -264,7 +264,7 @@ https://intermezzio.github.io/ChemistryLabs/TitrationOfVinegar/
 	var printstuff = function() {// Vol Na, Vol C2, Mol C2, M C2, m% C2 
 		answer.innerHTML = "";
 		summ = document.createElement("table");
-		summ.innerHTML += "<thead><tr><td>Trial</td><td>Volume of \\(NaOH\\) (mL)</td><td>Volume of Vinegar (mL)</td><td>Moles of \\(HC_{2}H_{3}O_{2}\\) (mol)</td><td>Molarity of \\(HC_{2}H_{3}O_{2}\\) (M)</td><td>% Mass of \\(HC_{2}H_{3}O_{2}\\) (\\(\\frac{m}{m})\\)</td></tr></thead>";
+		summ.innerHTML += "<thead><tr><td>Trial</td><td>Volume of \\(NaOH\\) (mL)</td><td>Volume of Vinegar (mL)</td><td>Moles of \\(CH_{3}COOH\\) (mol)</td><td>Molarity of \\(CH_{3}COOH\\) (M)</td><td>% Mass of \\(CH_{3}COOH\\) (\\(\\frac{m}{m})\\)</td></tr></thead>";
 		summ.id = "summ";
 		tbody = document.createElement("tbody");
 		for(var i = 0; i < tests; i++) {
