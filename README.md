@@ -3,5 +3,7 @@
 > Input your raw data from a lab and it will return calculated values in the form of a well-organized table
 
 So far, this repository calculates data for the following labs:
-1. [Preparing and Diluting Solutions](/PreparingAndDilutingSolutions)
-2. [Titration of Vinegar](/TitrationOfVinegar)
+1. [Preparing and Diluting Solutions](/ChemistryLabs/PreparingAndDilutingSolutions)
+2. [Titration of Vinegar](/ChemistryLabs/TitrationOfVinegar)
+
+More calculators are coming soon!
