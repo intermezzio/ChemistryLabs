@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Measuring Energy Changes</title>
+	<meta charset="utf-8">
+	<link rel="shortcut icon" href="flags_ora_icon.ico">
+	<link href="https://fonts.googleapis.com/css?family=Quattrocento|Quattrocento+Sans" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+	<link rel="stylesheet" href="style2.css">
+	<style type="text/css">
+		table {
+			border: 2px solid black;
+		}
+		td {
+			padding: 10px;
+			border: 2px dashed black;
+		}
+		body {
+			box-sizing: border-box;
+		}
+		#head {
+			text-align: center;
+		}
+		#datainput {
+			display: block;
+		}
+		#phasesDiv {
+			width: 30%;
+			float: left;
+			text-align: center;
+		}
+		#phases {
+			margin: auto;
+		}
+		#tempsDiv {
+			float: right;
+			width: 30%;
+			text-align: center;
+		}
+		#temps {
+			margin: auto;
+			margin-bottom: 10px;
+		}
+		div {
+			border: 1px dashed black;
+		}
+		#calculate {
+			float: left;
+			width: 40%;
+		}
+		#scatter {
+			position: relative;
+			top: 200px;
+			border: 1px solid red;
+			
+		}
+	</style>	
+</head>
+<body>
+<div id="head">
+	<h1>Measuring Energy Changes</h1>
+	<h2>Enter your data here:</h2>
+</div>
+<div id="datainput">
+<div id="tempsDiv">
+	<h2>Temperature of \(H_{2}O\)</h2>
+	<table id="temps">
+		<thead><td>Minute</td><td>Temperature (°C)</td></thead>
+		<tbody id="Btemps"></tbody>
+	</table>
+</div>
+<div id="phasesDiv">
+	<h2>Times of Phase Changes</h2>
+	<table id="phases">
+		<thead><td>Solid To Liquid</td><td>Liquid To Gas</td></thead>
+		<tbody><td><input type="number" name=""></td><td><input type="number" name=""></td></tbody>
+	</table>
+</div>
+<button id="submit-a">Generate Graph</button>
+
+<canvas id="scatter"></canvas>
+<script type="text/javascript">
+var minutes = 15;
+var tempsRow = "<td>%d</td><td><input type='number' name=''></td>";
+var temps = document.getElementById("Btemps");
+
+for(var i = 0; i <= minutes; i++) {
+	var n = document.createElement("tr");
+	n.innerHTML = tempsRow.replace('%d', i);
+	temps.appendChild(n);
+}
+//for(var i = 0; )
+</script>
+</body>
+</html>
