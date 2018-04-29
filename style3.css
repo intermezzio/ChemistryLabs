@@ -1,0 +1,102 @@
+body {
+	background-color: lightyellow;
+	font-family: "Work Sans", sans-serif;
+}
+table {
+	background-color: lightyellow;
+	border: 2px solid yellow;
+}
+td {
+	padding: 10px;
+	background-color: #fbc97f;
+	border: 1px solid orange;
+	margin: 5px;
+}
+button {
+	background-color: #fbc97f;
+	font: 16px "Work Sans", sans-serif;
+	padding: 10px;
+	margin: 0px;
+	border: 1px solid orange;
+	transition: background-color 0.1s;
+	-webkit-transition: background-color 0.1s;
+}
+button:hover {
+	background-color: orange;
+}
+.center {
+	text-align: center;
+}
+.Dbut {
+	padding: 2px;
+	border: 2px solid yellow;
+}
+#grid {
+	display: grid;
+	grid-template-columns: 20% [col-l] 20% [col-m] 20% [col-r] 20% [side-l] 20% [side-r];
+	grid-template-rows: 150px [head] 200px [b-top] auto [b-bot] 200px [foot];
+	grid-template-areas: 
+		"header header header header header"
+		"phases phases mid sidebar sidebar"
+		"canvas canvas canvas sidebar sidebar"
+		"footer footer footer footer footer";
+	justify-items: stretch;
+}
+#head {
+	grid-area: header;
+	text-align: center;
+}
+#datainput {
+	display: block;
+}
+#phasesDiv {
+	text-align: center;
+	grid-area: phases;
+}
+#phases {
+	margin: auto;
+}
+#tempsDiv {
+	text-align: center;
+	grid-area: sidebar;
+}
+#temps, #buttons {
+	margin: auto;
+	margin-bottom: 10px;
+}
+#calculate {
+	float: left;
+	width: 40%;
+}
+#mid {
+	grid-area: mid;
+	justify-items: center;
+}
+#error {
+	text-align: center;
+	color: red;
+}
+#submit-a {
+	width: 100%;
+}
+#deladd {
+	width: 50%;
+}
+#deladd button {
+	margin: 1px;
+}
+#Dscatter {
+	grid-area: canvas;
+	text-align: center;
+	height: 90%;
+	margin: 5%;
+	width: 90%;
+}
+#scatter {
+	border: 1px solid transparent;
+}
+.no {
+	padding: 0;
+	border: none;
+	grid-area: sidebar;
+}

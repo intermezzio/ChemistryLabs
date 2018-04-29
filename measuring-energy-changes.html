@@ -4,86 +4,52 @@
 	<title>Measuring Energy Changes</title>
 	<meta charset="utf-8">
 	<link rel="shortcut icon" href="flags_ora_icon.ico">
-	<link href="https://fonts.googleapis.com/css?family=Quattrocento|Quattrocento+Sans" rel="stylesheet">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Quattrocento|Quattrocento+Sans|Work+Sans" rel="stylesheet">
+	<script src="http://www.chartjs.org/dist/2.7.2/Chart.bundle.js"></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-	<link rel="stylesheet" href="style2.css">
-	<style type="text/css">
-		table {
-			border: 2px solid black;
-		}
-		td {
-			padding: 10px;
-			border: 2px dashed black;
-		}
-		body {
-			box-sizing: border-box;
-		}
-		#head {
-			text-align: center;
-		}
-		#datainput {
-			display: block;
-		}
-		#phasesDiv {
-			width: 30%;
-			float: left;
-			text-align: center;
-		}
-		#phases {
-			margin: auto;
-		}
-		#tempsDiv {
-			float: right;
-			width: 30%;
-			text-align: center;
-		}
-		#temps {
-			margin: auto;
-			margin-bottom: 10px;
-		}
-		div {
-			border: 1px dashed black;
-		}
-		#calculate {
-			float: left;
-			width: 40%;
-		}
-		#scatter {
-			position: relative;
-			top: 200px;
-			border: 1px solid red;
-			
-		}
-	</style>	
+	<link rel="stylesheet" href="style3.css">	
 </head>
 <body>
+<div id="grid">
 <div id="head">
 	<h1>Measuring Energy Changes</h1>
 	<h2>Enter your data here:</h2>
 </div>
-<div id="datainput">
 <div id="tempsDiv">
 	<h2>Temperature of \(H_{2}O\)</h2>
 	<table id="temps">
 		<thead><td>Minute</td><td>Temperature (°C)</td></thead>
 		<tbody id="Btemps"></tbody>
 	</table>
+	<table id="buttons">
+		<tr>
+			<td class="no"><button onclick = "addmin();">Add Minute</button></td>
+			<td class="no"><button onclick = "delmin();">Delete Minute</button></td>
+		</tr>
+	</table>
 </div>
 <div id="phasesDiv">
 	<h2>Times of Phase Changes</h2>
 	<table id="phases">
 		<thead><td>Solid To Liquid</td><td>Liquid To Gas</td></thead>
-		<tbody><td><input type="number" name=""></td><td><input type="number" name=""></td></tbody>
+		<tbody id="Bphases"><td><input type="number" name=""></td><td><input type="number" name=""></td></tbody>
 	</table>
 </div>
-<button id="submit-a">Generate Graph</button>
-
-<canvas id="scatter"></canvas>
+<div id="mid">
+	<p id="error"><br></p>
+	<div class="center Dbut"><button id="submit-a" onclick="calculateA();">Generate Graph</button></div>
+</div>
+<div id="Dscatter"><canvas id="scatter"></canvas></div>
+</div>
 <script type="text/javascript">
-var minutes = 15;
-var tempsRow = "<td>%d</td><td><input type='number' name=''></td>";
+var minutes = 20;
+var data = [];
+var tempsRow = "<td>%d</td><td><input type='number' step='0.01' name=''></td>";
 var temps = document.getElementById("Btemps");
+var phases= document.getElementById("Bphases");
+var error = document.getElementById("error");
+var plot  = document.getElementById("scatter");
+var color = Chart.helpers.color;
 
 for(var i = 0; i <= minutes; i++) {
 	var n = document.createElement("tr");
@@ -91,6 +57,113 @@ for(var i = 0; i <= minutes; i++) {
 	temps.appendChild(n);
 }
 //for(var i = 0; )
+function addmin() {
+	minutes++;
+	var n = document.createElement("tr");
+	n.innerHTML = tempsRow.replace('%d', minutes);
+	temps.appendChild(n);
+}
+function delmin() {
+	if(minutes <= 0) return;
+	minutes--;
+	var n = temps.querySelector("tr:nth-last-of-type(1)");
+	temps.removeChild(n);
+}
+
+var calculateA = function() {
+	// 0 < solToLiquid < LiquidToGas < minutes
+	StoL = parseInt(phases.querySelector("td:nth-of-type(1) input").value) || 0;
+	LtoG = parseInt(phases.querySelector("td:nth-of-type(2) input").value) || 0;
+	console.log(0 + ", " + StoL + ", " + LtoG + ", " + minutes);
+	if( (0 >= StoL) || (StoL >= LtoG) || (LtoG >= minutes) ) {
+		error.innerHTML = "Please provide the state changes";
+		return;
+	}else {error.innerHTML = "<br>";}
+	data = [Array(), Array(), Array()];
+	tempData = temps.querySelectorAll("tr td:nth-of-type(2) input");
+	console.log(minutes + ", " + tempData.length);
+	for(var i = 0; i < StoL; i++) {
+		data[0].push({x: i, y: parseFloat(tempData[i].value) || 0});
+	}
+	for(var i = StoL; i < LtoG; i++) {
+		data[1].push({x: i, y: parseFloat(tempData[i].value) || 0});
+	}
+	for(var i = LtoG; i <= minutes; i++) {
+		data[2].push({x: i, y: parseFloat(tempData[i].value) || 0});
+	}
+	console.log(data);
+	makeScatter();
+}
+
+window.chartColors = {
+	red: 'rgb(255, 99, 132)',
+	orange: 'rgb(255, 159, 64)',
+	yellow: 'rgb(255, 205, 86)',
+	green: 'rgb(75, 192, 192)',
+	blue: 'rgb(54, 162, 235)',
+	purple: 'rgb(153, 102, 255)',
+	grey: 'rgb(201, 203, 207)'
+};
+
+var makeScatter = function() {
+	var scatterChart = new Chart(plot, {
+		type: "scatter",
+		data: {
+			datasets: [{
+				label: "Solid",
+				data: data[0],
+				backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
+				borderColor: window.chartColors.red,
+				fill: false,
+				showLine: false
+			},{
+				label: "Liquid",
+				data: data[1],
+				backgroundColor: color(window.chartColors.green).alpha(0.2).rgbString(),
+				borderColor: window.chartColors.green,
+				fill: false,
+				showLine: false
+			},{
+				label: "Gas",
+				data: data[2],
+				backgroundColor: color(window.chartColors.blue).alpha(0.2).rgbString(),
+				borderColor: window.chartColors.blue,
+				fill: false,
+				showLine: false
+			}]
+		},
+		options: {
+			scales: {
+				xAxes: [{
+					type: "linear",
+					position: "bottom",
+					scaleLabel: {
+						display: true,
+						labelString: "Minutes Since Heating (min)"
+					}
+				}],
+				yAxes: [{
+					position: "left",
+					scaleLabel: {
+						display: true,
+						labelString: "Degrees Celsius (°C)"	
+					}
+				}]
+			},
+			title: {
+				display: true,
+				position: "top",
+				fontSize: 14,
+				fontFamily: "'Quattrocento Sans', sans-serif",
+				padding: 10,
+				text: "Temperature of Water At Different States"
+			}
+		}
+	});
+	plot.style.borderColor = chartColors.grey;
+	plot.style.backgroundColor = "#fff";
+	//MathJax.Hub.Queue(["Typeset",MathJax.Hub,plot]);
+}
 </script>
 </body>
 </html>
