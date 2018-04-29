@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ChemistryLabs - Not Found</title>
+</head>
+<body>
+<h1>404 - ChemistryLabs Page Not Found</h1>
+<p>
+	We will redirect you to <a href="index.html">the homepage</a> in <span id="t">5</span> seconds.</p>
+</body>
+<script type="text/javascript">
+	t = document.getElementById("t");
+	window.onload = function() {
+		setInterval(timerDown, 1000);
+	}
+	timerDown = function() {
+		if(t.innerHTML > 0) {
+			t.innerHTML = parseInt(t.innerHTML)-1;
+		} else {
+			t.innerHTML = 0;
+			window.location = "../ChemistryLabs";
+		}
+	}
+</script>
+</html>
