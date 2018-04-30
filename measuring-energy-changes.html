@@ -40,6 +40,14 @@
 	<div class="center Dbut"><button id="submit-a" onclick="calculateA();">Generate Graph</button></div>
 </div>
 <div id="Dscatter"><canvas id="scatter"></canvas></div>
+<table id="voltemp">
+	<thead>
+		<tr><td>Initial Volume (mL)</td><td>Initial Temp (°C)</td><td>Final Volume (mL)</td><td>Final Temp (°C)</td></tr>
+	</thead>
+	<tbody>
+		<tr id="volins"><td><input type="number" step="0.01" name=""></td><td><input type="number" step="0.01" name=""></td><td><input type="number" step="0.01" name=""></td><td><input type="number" step="0.01" name=""></td></tr>
+	</tbody>
+</table>
 </div>
 <script type="text/javascript">
 var minutes = 20;

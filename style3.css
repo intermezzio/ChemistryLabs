@@ -34,11 +34,13 @@ button:hover {
 #grid {
 	display: grid;
 	grid-template-columns: 20% [col-l] 20% [col-m] 20% [col-r] 20% [side-l] 20% [side-r];
-	grid-template-rows: 150px [head] 200px [b-top] auto [b-bot] 200px [foot];
+	grid-template-rows: 150px [head] 200px [b-top] auto [b-bot] 200px [entry-2] auto [answer] 200px [foot];
 	grid-template-areas: 
 		"header header header header header"
 		"phases phases mid sidebar sidebar"
 		"canvas canvas canvas sidebar sidebar"
+		"voltemp voltemp calc sidebar sidebar"
+		"answer answer answer sidebar sidebar"
 		"footer footer footer footer footer";
 	justify-items: stretch;
 }
@@ -89,12 +91,12 @@ button:hover {
 	grid-area: canvas;
 	text-align: center;
 	height: 90%;
-	margin: 5%;
+	margin-left: 5%;
 	width: 90%;
+
 }
 #scatter {
 	border: 1px solid transparent;
-	float: right;
 }
 .no {
 	padding: 0;
