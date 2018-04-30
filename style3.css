@@ -31,18 +31,23 @@ button:hover {
 	padding: 2px;
 	border: 2px solid yellow;
 }
+.error {
+	text-align: center;
+	color: red;
+}
 #grid {
 	display: grid;
 	grid-template-columns: 20% [col-l] 20% [col-m] 20% [col-r] 20% [side-l] 20% [side-r];
-	grid-template-rows: 150px [head] 200px [b-top] auto [b-bot] 200px [entry-2] auto [answer] 200px [foot];
+	grid-template-rows: 150px [head] 200px [b-top] auto [b-bot] 225px [entry-2] auto [answer] 200px [foot];
 	grid-template-areas: 
 		"header header header header header"
 		"phases phases mid sidebar sidebar"
 		"canvas canvas canvas sidebar sidebar"
 		"voltemp voltemp calc sidebar sidebar"
-		"answer answer answer sidebar sidebar"
+		"answer answer answer answer answer"
 		"footer footer footer footer footer";
 	justify-items: stretch;
+	align-content: stretch;	
 }
 #head {
 	grid-area: header;
@@ -62,21 +67,13 @@ button:hover {
 	text-align: center;
 	grid-area: sidebar;
 }
-#temps, #buttons {
+#temps, #buttons, #calc table {
 	margin: auto;
 	margin-bottom: 10px;
-}
-#calculate {
-	float: left;
-	width: 40%;
 }
 #mid {
 	grid-area: mid;
 	justify-items: center;
-}
-#error {
-	text-align: center;
-	color: red;
 }
 #submit-a {
 	width: 100%;
@@ -97,6 +94,29 @@ button:hover {
 }
 #scatter {
 	border: 1px solid transparent;
+}
+#voltempDiv {
+	grid-area: voltemp;
+	text-align: center;
+}
+#voltemp {
+	margin: auto;
+}
+#calc {
+	grid-area: calc;
+	margin: auto;
+	text-align: center;
+}
+#answer {
+	visibility: hidden;
+	grid-area: answer;
+	margin: auto;
+	margin-top: 30px;
+	place-self: stretch;
+	text-align: center;
+}
+#answer table {
+	justify-self: stretch;
 }
 .no {
 	padding: 0;

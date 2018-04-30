@@ -36,18 +36,55 @@
 	</table>
 </div>
 <div id="mid">
-	<p id="error"><br></p>
+	<p class="error"><br></p>
 	<div class="center Dbut"><button id="submit-a" onclick="calculateA();">Generate Graph</button></div>
 </div>
 <div id="Dscatter"><canvas id="scatter"></canvas></div>
-<table id="voltemp">
-	<thead>
-		<tr><td>Initial Volume (mL)</td><td>Initial Temp (°C)</td><td>Final Volume (mL)</td><td>Final Temp (°C)</td></tr>
-	</thead>
-	<tbody>
-		<tr id="volins"><td><input type="number" step="0.01" name=""></td><td><input type="number" step="0.01" name=""></td><td><input type="number" step="0.01" name=""></td><td><input type="number" step="0.01" name=""></td></tr>
-	</tbody>
-</table>
+<div id="voltempDiv">
+	<h2>Volume and Temperature of \(H_{2}O\)</h2>
+	<table id="voltemp">
+		<thead>
+			<tr><td></td><td>Initial</td><td>Final</td></tr>
+		</thead>
+		<tbody id="Bvoltemp">
+			<tr><td>Volume (mL)</td><td><input type="number" step="0.01" name=""></td><td><input type="number" step="0.01" name=""></td></tr><tr><td>Temp (°C)</td><td><input type="number" step="0.01" name=""></td><td><input type="number" step="0.01" name=""></td></tr>
+		</tbody>
+	</table>
+</div>
+<div id="calc">
+	<p class="error"><br></p>
+	<table>
+		<td class="no"><button id="calculate-B" onclick="calculateB();">Calculate Data</button></td>
+	</table>
+</div>
+<div id="answer">
+	<h2>Summative Data</h2>
+	<table>
+		<thead>
+			<tr>
+				<td>Water Mass (g)</td>
+				<td>Heat Released (J)</td>
+				<td>Heat Absorbed (J)</td>
+				<td>Ice Volume (mL)</td>
+				<td>Ice Mass (g)</td>
+				<td>Energy Per Gram (J/g)</td>
+				<td>\(\Delta H\) (kJ/mol)</td>
+				<td>Percent Error (%)</td>
+			</tr>
+		</thead>
+		<tbody id="Banswer">
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 <script type="text/javascript">
 var minutes = 20;
@@ -55,8 +92,11 @@ var data = [];
 var tempsRow = "<td>%d</td><td><input type='number' step='0.01' name=''></td>";
 var temps = document.getElementById("Btemps");
 var phases= document.getElementById("Bphases");
-var error = document.getElementById("error");
+var AAAnswer = document.getElementById("answer");
+var errors = document.getElementsByClassName("error");
 var plot  = document.getElementById("scatter");
+var inB = document.querySelectorAll("#Bvoltemp input");
+var ansout = document.querySelectorAll("#Banswer td");
 var color = Chart.helpers.color;
 
 for(var i = 0; i <= minutes; i++) {
@@ -84,9 +124,9 @@ var calculateA = function() {
 	LtoG = parseInt(phases.querySelector("td:nth-of-type(2) input").value) || 0;
 	console.log(0 + ", " + StoL + ", " + LtoG + ", " + minutes);
 	if( (0 >= StoL) || (StoL >= LtoG) || (LtoG >= minutes) ) {
-		error.innerHTML = "Please provide the state changes";
+		errors[0].innerHTML = "Please provide the state changes";
 		return;
-	}else {error.innerHTML = "<br>";}
+	}else {errors[0].innerHTML = "<br>";}
 	data = [Array(), Array(), Array()];
 	tempData = temps.querySelectorAll("tr td:nth-of-type(2) input");
 	console.log(minutes + ", " + tempData.length);
@@ -101,6 +141,46 @@ var calculateA = function() {
 	}
 	console.log(data);
 	makeScatter();
+}
+
+var calculateB = function() {
+	var answers = [];
+	var vols = [parseFloat(inB[0].value) || 0, parseFloat(inB[1].value) || 0];
+	var temps= [parseFloat(inB[2].value) || 0, parseFloat(inB[3].value) || 0];
+	var delT = temps[1] - temps[0];
+	console.log(vols);
+	console.log(temps);
+	if(temps[0] < 30.0) {
+		var densW = 1.00;
+	}else if(temps[0] < 42.5) {
+		var densW = 0.992;
+	}else if(temps[0] < 47.5) {
+		var densW = 0.990;
+	}else if(temps[0] < 52.5) {
+		var densW = 0.988;
+	}else {
+		var densW = 0.985;
+	}
+	answers[0] = vols[0] * densW;
+	answers[1] = 4.184 * answers[0] * delT;
+	answers[2] = -1 * answers[1];
+	answers[3] = (vols[1] * 1.00) - answers[0];
+	answers[4] = answers[3] * 1.00;
+	answers[5] = answers[2] / answers[4] || "Error";
+	var iceHeat = 4.184 * (answers[5] !== "Error" ? answers[5] : 0) * delT;
+	var iceFus = answers[2] - iceHeat;
+	answers[6] = ( iceFus / 1000 ) / ( (answers[0] + answers[4]) / 18.015 );
+	answers[7] = (answers[6] - 6.02) / 6.02 * 100;
+	if(answers.indexOf("Error") !== -1) {
+		errors[1].innerHTML = "Please correct the input";
+		return;
+	}else {
+		errors[1].innerHTML = "<br>";
+	}
+	AAAnswer.style.visibility = "visible";
+	answers.forEach(function(a,index) {
+		ansout[index].innerHTML = a.toFixed(3);
+	})
 }
 
 window.chartColors = {
