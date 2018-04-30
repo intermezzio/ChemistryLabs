@@ -94,6 +94,7 @@ button:hover {
 }
 #scatter {
 	border: 1px solid transparent;
+	float: right;
 }
 .no {
 	padding: 0;
