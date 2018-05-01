@@ -68,7 +68,7 @@
 				<td>Ice Volume (mL)</td>
 				<td>Ice Mass (g)</td>
 				<td>Energy Per Gram (J/g)</td>
-				<td>\(\Delta H\) (kJ/mol)</td>
+				<td>\(\Delta H_{Fusion}\) (kJ/mol)</td>
 				<td>Percent Error (%)</td>
 			</tr>
 		</thead>
@@ -130,13 +130,13 @@ var calculateA = function() {
 	data = [Array(), Array(), Array()];
 	tempData = temps.querySelectorAll("tr td:nth-of-type(2) input");
 	console.log(minutes + ", " + tempData.length);
-	for(var i = 0; i < StoL; i++) {
+	for(let i = 0; i < StoL; i++) {
 		data[0].push({x: i, y: parseFloat(tempData[i].value) || 0});
 	}
-	for(var i = StoL; i < LtoG; i++) {
+	for(let i = StoL; i < LtoG; i++) {
 		data[1].push({x: i, y: parseFloat(tempData[i].value) || 0});
 	}
-	for(var i = LtoG; i <= minutes; i++) {
+	for(let i = LtoG; i <= minutes; i++) {
 		data[2].push({x: i, y: parseFloat(tempData[i].value) || 0});
 	}
 	console.log(data);
@@ -148,8 +148,6 @@ var calculateB = function() {
 	var vols = [parseFloat(inB[0].value) || 0, parseFloat(inB[1].value) || 0];
 	var temps= [parseFloat(inB[2].value) || 0, parseFloat(inB[3].value) || 0];
 	var delT = temps[1] - temps[0];
-	console.log(vols);
-	console.log(temps);
 	if(temps[0] < 30.0) {
 		var densW = 1.00;
 	}else if(temps[0] < 42.5) {
@@ -164,12 +162,13 @@ var calculateB = function() {
 	answers[0] = vols[0] * densW;
 	answers[1] = 4.184 * answers[0] * delT;
 	answers[2] = -1 * answers[1];
-	answers[3] = (vols[1] * 1.00) - answers[0];
+	answers[3] = vols[1] - vols[0];
 	answers[4] = answers[3] * 1.00;
 	answers[5] = answers[2] / answers[4] || "Error";
-	var iceHeat = 4.184 * (answers[5] !== "Error" ? answers[5] : 0) * delT;
-	var iceFus = answers[2] - iceHeat;
-	answers[6] = ( iceFus / 1000 ) / ( (answers[0] + answers[4]) / 18.015 );
+	var iceHeat = 4.184 * answers[4] * delT; // heat used to heat up ice
+	var iceFuse = answers[2] - iceHeat; //heat used to change state
+	var molsIce = answers[4] / 18.015;
+	answers[6] = ( iceFuse / 1000 ) / ( molsIce );
 	answers[7] = (answers[6] - 6.02) / 6.02 * 100;
 	if(answers.indexOf("Error") !== -1) {
 		errors[1].innerHTML = "Please correct the input";
@@ -181,6 +180,8 @@ var calculateB = function() {
 	answers.forEach(function(a,index) {
 		ansout[index].innerHTML = a.toFixed(3);
 	})
+	console.log(densW + ", " + iceFuse + ", " + molsIce);
+	console.log(answers);
 }
 
 window.chartColors = {
