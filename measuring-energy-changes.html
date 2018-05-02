@@ -160,15 +160,16 @@ var calculateB = function() {
 		var densW = 0.985;
 	}
 	answers[0] = vols[0] * densW;
-	answers[1] = 4.184 * answers[0] * delT;
+	answers[1] = 4.18 * answers[0] * delT;
 	answers[2] = -1 * answers[1];
 	answers[3] = vols[1] - vols[0];
 	answers[4] = answers[3] * 1.00;
 	answers[5] = answers[2] / answers[4] || "Error";
-	var iceHeat = 4.184 * answers[4] * delT; // heat used to heat up ice
-	var iceFuse = answers[2] - iceHeat; //heat used to change state
-	var molsIce = answers[4] / 18.015;
-	answers[6] = ( iceFuse / 1000 ) / ( molsIce );
+	if(answers[5] === "Error") {
+		errors[1].innerHTML = "Please correct the input";
+		return;
+	}
+	answers[6] = ( answers[5] / 1000 ) * 18.015;
 	answers[7] = (answers[6] - 6.02) / 6.02 * 100;
 	if(answers.indexOf("Error") !== -1) {
 		errors[1].innerHTML = "Please correct the input";
