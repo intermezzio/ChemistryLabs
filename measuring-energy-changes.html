@@ -196,6 +196,7 @@ window.chartColors = {
 };
 
 var makeScatter = function() {
+	plot.style.visibility = "visible";
 	var scatterChart = new Chart(plot, {
 		type: "scatter",
 		data: {
@@ -258,7 +259,7 @@ var makeScatter = function() {
 			}
 		}
 	});
-	plot.style.borderColor = chartColors.grey;
+	plot.style.borderColor = "#ff0";
 	plot.style.backgroundColor = "#fff";
 	//MathJax.Hub.Queue(["Typeset",MathJax.Hub,plot]);
 }

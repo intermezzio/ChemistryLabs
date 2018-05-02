@@ -6,6 +6,9 @@ table {
 	background-color: lightyellow;
 	border: 2px solid yellow;
 }
+canvas {
+	border: 2px solid yellow;
+}
 td {
 	padding: 10px;
 	background-color: #fbc97f;
@@ -93,7 +96,7 @@ button:hover {
 
 }
 #scatter {
-	border: 1px solid transparent;
+	visibility: hidden;
 }
 #voltempDiv {
 	grid-area: voltemp;
