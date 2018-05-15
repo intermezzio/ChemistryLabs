@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css?family=Oxygen+Mono|Oxygen');
+
+#grid {
+	grid-template-rows: 100px [title] 25px [code] 25px [stmt] 500px [img];
+	grid-template-columns: 100%;
+	grid-template-areas: "title" "code" "stmt" "img";
+}
+
+body {
+	background-color: #acacac;
+	text-align: center;
+}
+h1 {
+	font: 28px "Oxygen Mono", monospace;
+	margin-top: 50px;
+	grid-area: title;
+}
+code {
+	background: #9AACAE;
+	border:black solid 2px;
+	border-radius: 2px;
+	font: 16px monospace;
+	color: white;
+	padding:6px;
+	grid-area: code;
+}​
+#img {
+	height: 300px;
+	width: auto;
+	grid-area: img;
+}
+p {
+	font: 14px "Oxygen", sans-serif;
+	grid-area: stmt;
+}
+
+.red,body span:nth-of-type(2) {
+	color: #ff00007f;
+}
+.blue {
+	color: cyan;
+}
+#comment {
+	color: #555;
+}

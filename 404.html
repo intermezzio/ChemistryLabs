@@ -2,18 +2,34 @@
 <html>
 <head>
 	<title>ChemistryLabs - Not Found</title>
+	<link rel="stylesheet" href="Styles/404.css">
 </head>
 <body>
-<h1>404 - ChemistryLabs Page Not Found</h1>
-<p>
-	We will redirect you to <a href="index.html">the homepage</a> in <span id="t">5</span> seconds.</p>
+<div id="grid">
+	<h1>ChemistryLabs Page Not Found</h1>
+	<code>
+		<span class="blue"> raise</span> 
+		<span class="red">
+			<strong>Exception</strong>(HTTP Error 404)
+		</span>
+		<span id="comment"># page not found</span>
+	</code>
+	<br>
+	<p>We will redirect you to <a href="index.html">the homepage</a> in <span id="t">5</span> seconds.<br>
+		On the contrary, click <a href="#" onclick="stay()">here</a> to stay on the page.</p>
+	<img id="img" src="" alt="Have fun with chemistry!" title="yes">
+</div>
 </body>
 <script type="text/javascript">
 	t = document.getElementById("t");
+	img = document.getElementById("img");
+	var timer;
 	window.onload = function() {
-		setInterval(timerDown, 1000);
+		imgChoice = Math.floor(Math.random() * 4);
+		img.src = "Images/404-" + imgChoice + ".jpeg";
+		timer = setInterval(timerDown, 1000);
 	}
-	timerDown = function() {
+	var timerDown = function() {
 		if(t.innerHTML > 0) {
 			t.innerHTML = parseInt(t.innerHTML)-1;
 		} else {
@@ -21,5 +37,10 @@
 			window.location = "../ChemistryLabs";
 		}
 	}
+	var stay = function() {
+		clearInterval(timer);
+		t.innerHTML = "infinty"
+	}
+
 </script>
 </html>
