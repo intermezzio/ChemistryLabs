@@ -1,13 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Oxygen+Mono|Oxygen');
 
+
 #grid {
-	grid-template-rows: 100px [title] 25px [code] 25px [stmt] 500px [img];
-	grid-template-columns: 100%;
-	grid-template-areas: "title" "code" "stmt" "img";
+	height: 100vh;
 }
 
 body {
-	background-color: #acacac;
+	background-color: #ccddee;
 	text-align: center;
 }
 h1 {
@@ -16,14 +15,32 @@ h1 {
 	grid-area: title;
 }
 code {
-	background: #9AACAE;
+	display: block;
+	width: 40%;
+	margin: auto;
+	background: #556;
 	border:black solid 2px;
 	border-radius: 2px;
 	font: 16px monospace;
 	color: white;
-	padding:6px;
+	padding: 6px;
 	grid-area: code;
 }​
+
+@media only screen and (max-width: 600px) {
+	code {
+		width: 100%;
+	}
+}
+@media only screen and (min-width: 601px) {
+	code {
+		width: 425px;
+	}
+	body {
+		overflow: hidden;
+	}
+}
+
 #img {
 	height: 300px;
 	width: auto;
@@ -35,11 +52,11 @@ p {
 }
 
 .red,body span:nth-of-type(2) {
-	color: #ff00007f;
+	color: #ff7f7f;
 }
 .blue {
 	color: cyan;
 }
 #comment {
-	color: #555;
+	color: #aaa;
 }

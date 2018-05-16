@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>ChemistryLabs - Not Found</title>
+	<meta charset="utf-8">
 	<link rel="stylesheet" href="Styles/404.css">
 </head>
 <body>
@@ -10,7 +11,7 @@
 	<code>
 		<span class="blue"> raise</span> 
 		<span class="red">
-			<strong>Exception</strong>(HTTP Error 404)
+			<strong>OSError</strong>("HTTP 404")
 		</span>
 		<span id="comment"># page not found</span>
 	</code>
@@ -23,10 +24,14 @@
 <script type="text/javascript">
 	t = document.getElementById("t");
 	img = document.getElementById("img");
+	grid = document.getElementById("grid");
+
 	var timer;
 	window.onload = function() {
 		imgChoice = Math.floor(Math.random() * 7);
 		img.src = "Images/404-" + imgChoice + ".jpeg";
+		img.style.height = "50%";
+		img.style.maxWidth = "65%";
 		timer = setInterval(timerDown, 1000);
 	}
 	var timerDown = function() {
@@ -39,7 +44,7 @@
 	}
 	var stay = function() {
 		clearInterval(timer);
-		t.innerHTML = "infinity"
+		t.innerHTML = "infinity";
 	}
 
 </script>
