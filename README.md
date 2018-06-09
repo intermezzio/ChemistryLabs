@@ -6,5 +6,3 @@ So far, this repository calculates data for the following labs:
 1. [Preparing and Diluting Solutions](preparing-and-diluting-solutions.html)
 2. [Titration of Vinegar](titration-of-vinegar.html)
 3. [Measuring Energy Changes](measuring-energy-changes.html)
-
-More calculators are coming soon!
